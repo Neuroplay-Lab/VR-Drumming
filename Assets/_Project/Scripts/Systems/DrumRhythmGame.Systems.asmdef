@@ -2,7 +2,8 @@
     "name": "DrumRhythmGame.Systems",
     "references": [
         "GUID:b449ba40da42b2d4caafcd5168a60217",
-        "GUID:560b04d1a97f54a4e82edc0cbbb69285"
+        "GUID:560b04d1a97f54a4e82edc0cbbb69285",
+        "GUID:69b1eef00ed2c418ebd4e2f5ce9d28db"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

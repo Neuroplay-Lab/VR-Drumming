@@ -167,6 +167,7 @@ namespace _Project.Scripts.Systems
         /// <returns></returns>
         private IEnumerator PlayPromptLoop()
         {
+            Debug.Log("Prompt Loop");
             yield return new WaitForSeconds(setting.initialDelayTime);
             promptAnimator.SetBool(Playing, true);
         }

@@ -50,12 +50,14 @@ namespace _Project.Scripts.Field
         {
             EventManager.DrumHitEvent += OnDrumHit;
             EventManager.MusicSettingChangeEvent += UpdateScore;
+            EventManager.MusicResetEvent += ResetBeatCounter;
         }
 
         private void OnDisable()
         {
             EventManager.DrumHitEvent -= OnDrumHit;
             EventManager.MusicSettingChangeEvent -= UpdateScore;
+            EventManager.MusicResetEvent -= ResetBeatCounter;
         }
 
         #endregion
@@ -87,6 +89,11 @@ namespace _Project.Scripts.Field
             }
 
             MusicSequence.Instance.SetTrigger(-duration, OnTime);
+        }
+
+        private void ResetBeatCounter()
+        {
+            _beatCounter = 0;
         }
 
         private void OnDrumHit(ActorType actor, InstrumentType type, XRNode node)
@@ -122,7 +129,7 @@ namespace _Project.Scripts.Field
                 if (_loopScore == false) return;
 
                 // Reset counter
-                _beatCounter %= _musicScore.rowCount;
+                ResetBeatCounter();
             }
 
             for (var i = 0; i < _musicScore.columnCount; i++)

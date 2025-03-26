@@ -3,9 +3,9 @@
     "index": 0,
     "presets": [
         {
-            "missHitFrequencyRate": 0.2997506558895111,
-            "latencyFrequencyRate": 0.8192904591560364,
-            "maxLatencyTime": 0.9263984560966492
+            "missHitFrequencyRate": 0.0,
+            "latencyFrequencyRate": 0.0,
+            "maxLatencyTime": 0.0
         },
         {
             "missHitFrequencyRate": 0.0,

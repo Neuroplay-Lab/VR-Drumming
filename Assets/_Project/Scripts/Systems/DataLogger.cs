@@ -20,15 +20,25 @@ namespace _Project.Scripts.Systems
 
         private bool _isRecording;
         private Queue<string> _queue;
+        //private Queue<(byte[], float)> _screenshots;
 
         private SaveData _saveData;
 
         public DataLogger()
         {
-            _logDirectory = $@"{Application.dataPath}/Log";
-            if (!Directory.Exists(_logDirectory))
+            string baseLogDir = $@"{Application.dataPath}/Log";
+            if (!Directory.Exists(baseLogDir))
                 // Create directory when it doesn't exist
+                Directory.CreateDirectory(baseLogDir);
+
+            ParticipantData currentPpt = ParticipantData.GetNextParticipantID();
+            _logDirectory = baseLogDir + $"/{currentPpt.date}-ppt{currentPpt.pptNumber}/Sync Logs";
+            currentPpt.Save();
+            if (!Directory.Exists(_logDirectory))
+            {
                 Directory.CreateDirectory(_logDirectory);
+
+            }
         }
 
         #region IDisposable Members
@@ -43,6 +53,7 @@ namespace _Project.Scripts.Systems
         public void StartRecording(string csvLabel = "Label")
         {
             _queue = new Queue<string>();
+            //_screenshots = new Queue<(byte[], float)>();
             _coroutine = Observable.FromCoroutine(() => StartRecordingTransform(csvLabel)).Subscribe();
             _saveData = SaveData.Instance;
         }
@@ -61,11 +72,21 @@ namespace _Project.Scripts.Systems
             _queue?.Enqueue(text);
         }
 
+        /*public void EnqueueScreenshot(byte[] ss, float logTime)
+        {
+            _screenshots?.Enqueue((ss, logTime));
+        }*/
+
         private IEnumerator StartRecordingTransform(string csvLabel)
         {
             // TODO: Could probably use a better file name, and allow the user to specify it
             var filePath = _logDirectory + $@"/{DateTime.Now:yyyy-MM-dd-HHmmss}.csv";
             _isRecording = true;
+
+            /*var screenshotFolderPath = _logDirectory + $@"/{DateTime.Now:yyyy-MM-dd-HHmmss}";
+
+            // Create directory
+            Directory.CreateDirectory(screenshotFolderPath);*/
 
             using (var writer = new StreamWriter(filePath, false, Encoding.UTF8))
             {
@@ -83,11 +104,22 @@ namespace _Project.Scripts.Systems
                         writer.Flush();
                     }
 
+                    /*if (_screenshots.Count > 0)
+                    {
+                        var (ss, t) = _screenshots.Dequeue();
+
+                        System.IO.File.WriteAllBytes(screenshotFolderPath + $@"/{t}.png", ss);
+
+                    }*/
+
                     yield return null;
                 }
             }
 
+            
+
             _queue.Clear();
+            //_screenshots.Clear();
         }
     }
 }

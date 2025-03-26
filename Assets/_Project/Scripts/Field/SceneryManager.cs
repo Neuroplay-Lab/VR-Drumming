@@ -22,6 +22,8 @@ namespace _Project.Scripts.Field
 
         private GameObject _currentScenery;
 
+        [SerializeField] private EyeFocus eyeTracker;
+
         #region Event Functions
 
         private void OnEnable()
@@ -58,6 +60,7 @@ namespace _Project.Scripts.Field
             if (_currentScenery != null) Destroy(_currentScenery);
             SaveData.Instance.sceneryData.sceneryIndex = scene.index;
             _currentScenery = Instantiate(scene.prefab, instantiationPosition);
+            eyeTracker.sceneChange(scene.name);
             Debug.Log($"{Prefix} Instantiated scene <color=green>{scene.index}</color>");
         }
 

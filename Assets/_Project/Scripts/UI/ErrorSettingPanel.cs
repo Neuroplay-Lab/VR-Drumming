@@ -98,6 +98,7 @@ namespace _Project.Scripts.UI
                 SetErrors(0, 0, 0);
                 // TODO: Convert this to a singleton and use Instance instead
                 GetComponent<PromptPositionSettingPanel>().Reset();
+                GetComponent<AvatarPositionOffset>().Reset();
             });
 
             // Initialize preset dropdown
